@@ -407,27 +407,33 @@ namespace roeutils
     void UpdateUnityTrust(CCharEntity* PChar, bool sendUpdate)
     {
         TracyZoneScoped;
-        int32  curPoints        = charutils::GetPoints(PChar, "prev_accolades") / 1000;
-        int32  prevPoints       = charutils::GetPoints(PChar, "current_accolades") / 1000;
+        // int32  curPoints        = charutils::GetPoints(PChar, "prev_accolades") / 1000;
+        // int32  prevPoints       = charutils::GetPoints(PChar, "current_accolades") / 1000;
         uint16 unityLeaderTrust = (PChar->profile.unity_leader > 0) ? ROE_TRUST_ID[PChar->profile.unity_leader - 1] : 0;
 
-        if (unityLeaderTrust > 0)
+        if (!charutils::hasSpell(PChar, unityLeaderTrust))
         {
-            if (curPoints >= 5 || prevPoints >= 5)
+            if (unityLeaderTrust > 0)
             {
                 charutils::addSpell(PChar, unityLeaderTrust);
                 charutils::SaveSpell(PChar, unityLeaderTrust);
-            }
-            else
-            {
-                charutils::delSpell(PChar, unityLeaderTrust);
-                charutils::DeleteSpell(PChar, unityLeaderTrust);
-            }
-        }
 
-        if (sendUpdate)
-        {
-            PChar->pushPacket<CCharSpellsPacket>(PChar);
+                // if (curPoints >= 5 || prevPoints >= 5)
+                // {
+                //     charutils::addSpell(PChar, unityLeaderTrust);
+                //     charutils::SaveSpell(PChar, unityLeaderTrust);
+                // }
+                // else
+                // {
+                //     charutils::delSpell(PChar, unityLeaderTrust);
+                //     charutils::DeleteSpell(PChar, unityLeaderTrust);
+                // }
+            }
+
+            if (sendUpdate)
+            {
+                PChar->pushPacket<CCharSpellsPacket>(PChar);
+            }
         }
     }
 
