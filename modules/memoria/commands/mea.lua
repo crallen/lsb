@@ -3,6 +3,7 @@
 -- desc: Command that teleports player to telepoint Mea
 -----------------------------------
 ---@type TCommand
+
 local commandObj = {}
 
 commandObj.cmdprops =
@@ -12,7 +13,7 @@ commandObj.cmdprops =
 }
 
 commandObj.onTrigger = function(player)
-  xi.spells.enhancing.useTeleportSpell(nil, player, xi.magic.spell.TELEPORT_MEA)
+  player:addStatusEffectEx(xi.effect.TELEPORT, 0, xi.teleport.id.MEA, 0, 3)
 end
 
 return commandObj
