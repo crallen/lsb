@@ -14,7 +14,7 @@ xi.events.loginCampaign = xi.events.loginCampaign or {}
 local loginCampaignYear = 2024
 local loginCampaignMonth = 12
 local loginCampaignDay = 1
-local loginCampaignDuration = 30 -- Duration is set in Earth days (Average is 23 days)
+local loginCampaignDuration = 365 -- Duration is set in Earth days (Average is 23 days)
 
 -- Checks if a Login Campaign is active.
 xi.events.loginCampaign.isCampaignActive = function()
