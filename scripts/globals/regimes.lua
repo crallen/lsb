@@ -66,6 +66,8 @@ local regimeInfo =
             [133] = { act = 'SALTED_FISH',     cost = 50, discounted = 25, food = true },
             [149] = { act = 'HARD_COOKIE',     cost = 50, discounted = 25, food = true },
             [165] = { act = 'INSTANT_NOODLES', cost = 50, discounted = 25, food = true },
+            [181] = { act = 'CIPHER_SAKURA',   cost = 300, discounted = 300 },
+            [197] = { act = 'CIPHER_KORU',     cost = 300, discounted = 300 },
 
             -- TODO: implement elite training
             -- ELITE_INTRO     =  36,
@@ -1320,13 +1322,13 @@ xi.regime.bookOnEventFinish = function(player, option, regimeType)
             end,
 
             ['CIPHER_SAKURA'] = function()
-                if not npcUtil.giveItem(player, xi.item.CIPHER_OF_SAKURAS_ALTER_EGO) then
+                if not npcUtil.giveItem(player, { { xi.item.CIPHER_OF_SAKURAS_ALTER_EGO, 1 } }) then
                     player:addCurrency('valor_point', 300) --refund player if they can't obtain
                 end
             end,
 
             ['CIPHER_KORU'] = function()
-                if not npcUtil.giveItem(player, xi.item.CIPHER_OF_KORU_MORUS_ALTER_EGO) then
+                if not npcUtil.giveItem(player, { { xi.item.CIPHER_OF_KORU_MORUS_ALTER_EGO, 1 } }) then
                     player:addCurrency('valor_point', 300) --refund player if they can't obtain
                 end
             end,
