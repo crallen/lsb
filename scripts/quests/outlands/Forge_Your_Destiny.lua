@@ -140,7 +140,8 @@ quest.sections =
 
                 onTrigger = function(player, npc)
                     local waitTime = quest:getVar(player, 'waitTime')
-                    local timeRemaining = waitTime - os.time()
+                    -- local timeRemaining = waitTime - os.time()
+                    local timeRemaining = 0
 
                     if waitTime == 0 then
                         return quest:progressEvent(26)
