@@ -117,6 +117,10 @@ local prizes =
             -- 4066,  -- Rem's Tale Ch.3
             -- 4067,  -- Rem's Tale Ch.4
             -- 4068,  -- Rem's Tale Ch.5
+            xi.item.FACILITY_RING, -- Facility Ring
+            xi.item.CALIBER_RING, -- Caliber Ring
+            xi.item.ECHAD_RING, -- Echad Ring
+            xi.item.TRIZEK_RING, -- Trizek Ring
         },
     },
 
@@ -128,6 +132,7 @@ local prizes =
             -- TODO: Special month-to-month things
             xi.item.MOUNT_DHALMEL, -- ♪Dhalmel
             xi.item.CIPHER_OF_MONBERAUXS_ALTER_EGO, -- Cipher: Monberaux
+            xi.item.SPROUT_BERET, -- Sprout Beret
         },
 
     },
@@ -163,8 +168,8 @@ local prizes =
         ['items'] =
         {
             -- 6499,  -- Patio Design Plans
-            xi.item.FACILITY_RING, -- Facility Ring
-            xi.item.CALIBER_RING, -- Caliber Ring
+            -- xi.item.FACILITY_RING, -- Facility Ring
+            -- xi.item.CALIBER_RING, -- Caliber Ring
             -- 6486,  -- Frayed Sack (Pel)
             -- 6487,  -- Frayed Sack (Fer)
             -- 6488,  -- Frayed Sack (Tau)
