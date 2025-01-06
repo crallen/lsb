@@ -28,7 +28,7 @@ commandObj.onTrigger = function(player)
 
     player:addStatusEffect(xi.effect.REGEN, 20, 3, 0)
     player:addStatusEffect(xi.effect.REFRESH, 20, 3, 0)
-    player:addStatusEffect(xi.effect.REGAIN, 20, 3, 0) -- this is also affected by the TP multiplier
+    player:addStatusEffect(xi.effect.REGAIN, 10, 3, 0) -- this is also affected by the TP multiplier
 
     double_print(player, 'Buffs enabled')
 end
