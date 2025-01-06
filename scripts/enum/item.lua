@@ -5399,6 +5399,7 @@ xi.item =
     WALKURE_MASK                        = 15185,
     MAATS_CAP                           = 15194,
     ELEGANT_RIBBON                      = 15196,
+    SPROUT_BERET                        = 15198,
     YAGUDO_HEADGEAR                     = 15202,
     GOBLIN_COIF                         = 15203,
     GADZRADDS_HELM                      = 15214,
