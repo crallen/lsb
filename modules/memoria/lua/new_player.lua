@@ -79,6 +79,9 @@ m:addOverride('xi.player.charCreate', function(player)
     player:addItem(xi.item.DESTRIER_BERET)
     player:addItem(xi.item.ECHAD_RING)
 
+    player:addKeyItem(xi.keyItem.LIMIT_BREAKER)
+    player:addKeyItem(xi.keyItem.JOB_BREAKER)
+
     for _, v in pairs(skills) do
         player:setSkillLevel(v, 4240)
     end
