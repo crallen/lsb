@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -184,7 +184,7 @@ bool CPlayerController::UseItem(uint16 targid, uint8 loc, uint8 slotid)
     return false;
 }
 
-bool CPlayerController::WeaponSkill(uint16 targid, uint16 wsid)
+bool CPlayerController::WeaponSkill(uint16 targid, uint16 wsid, bool consumeTP, uint16 minTPForDamage)
 {
     auto* PChar = static_cast<CCharEntity*>(POwner);
     if (canAct() && PChar->PAI->CanChangeState())
@@ -248,7 +248,7 @@ bool CPlayerController::WeaponSkill(uint16 targid, uint16 wsid)
 
             m_lastWeaponSkill = PWeaponSkill;
 
-            return CController::WeaponSkill(targid, wsid);
+            return CController::WeaponSkill(targid, wsid, consumeTP, minTPForDamage);
         }
         else if (errMsg)
         {

@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -45,7 +45,7 @@ public:
     virtual bool Engage(uint16 targid);
     virtual bool ChangeTarget(uint16 targid);
     virtual bool Disengage();
-    virtual bool WeaponSkill(uint16 targid, uint16 wsid);
+    virtual bool WeaponSkill(uint16 targid, uint16 wsid, bool consumeTP = true, uint16 minTPForDamage = 0);
     virtual bool Ability(uint16 targid, uint16 abilityid)
     {
         return false;

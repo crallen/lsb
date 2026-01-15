@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -78,11 +78,11 @@ bool CController::Disengage()
     return false;
 }
 
-bool CController::WeaponSkill(uint16 targid, uint16 wsid)
+bool CController::WeaponSkill(uint16 targid, uint16 wsid, bool consumeTP, uint16 minTPForDamage)
 {
     if (POwner)
     {
-        return POwner->PAI->Internal_WeaponSkill(targid, wsid);
+        return POwner->PAI->Internal_WeaponSkill(targid, wsid, consumeTP, minTPForDamage);
     }
     return false;
 }

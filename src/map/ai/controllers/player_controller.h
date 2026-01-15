@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -41,7 +41,7 @@ public:
     virtual bool Engage(uint16 targid) override;
     virtual bool ChangeTarget(uint16 targid) override;
     virtual bool Disengage() override;
-    virtual bool WeaponSkill(uint16 targid, uint16 wsid) override;
+    virtual bool WeaponSkill(uint16 targid, uint16 wsid, bool consumeTP = true, uint16 minTPForDamage = 0) override;
 
     virtual bool Ability(uint16 targid, uint16 abilityid) override;
     virtual bool RangedAttack(uint16 targid);

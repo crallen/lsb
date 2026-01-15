@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -15732,7 +15732,7 @@ std::string CLuaBaseEntity::addGambit(uint16 targ, const sol::table& predicates,
         if (reactionsTable.get_type() == sol::type::table)
         {
             // Process table of reactions
-            // { { reactionType, selector, selectorArg }, { reactionType, selector, selectorArg } }
+            // { { reactionType, selector, selectorArg, [flags] }, { reactionType, selector, selectorArg, [flags] } }
             if (reactionsTable.get<sol::optional<sol::table>>(1))
             {
                 for (const auto& reactionDefinitionPair : reactionsTable)
@@ -15741,17 +15741,19 @@ std::string CLuaBaseEntity::addGambit(uint16 targ, const sol::table& predicates,
                     auto reactionType        = static_cast<G_REACTION>(reactionTable.get<uint16>(1));
                     auto reactionSelector    = static_cast<G_SELECT>(reactionTable.get<uint16>(2));
                     auto reactionSelectorArg = reactionTable.get<uint32>(3);
-                    actions.emplace_back(reactionType, reactionSelector, reactionSelectorArg);
+                    auto reactionFlags       = reactionTable.get_or<uint32>(4, 0);
+                    actions.emplace_back(reactionType, reactionSelector, reactionSelectorArg, reactionFlags);
                 }
             }
-            else if (reactionsTable.size() == 3)
+            else if (reactionsTable.size() >= 3)
             {
                 // Single reaction
-                // { reactionType, selector, selectorArg }
+                // { reactionType, selector, selectorArg, [flags] }
                 auto reactionType        = static_cast<G_REACTION>(reactionsTable.get<uint16>(1));
                 auto reactionSelector    = static_cast<G_SELECT>(reactionsTable.get<uint16>(2));
                 auto reactionSelectorArg = reactionsTable.get<uint32>(3);
-                actions.emplace_back(reactionType, reactionSelector, reactionSelectorArg);
+                auto reactionFlags       = reactionsTable.get_or<uint32>(4, 0);
+                actions.emplace_back(reactionType, reactionSelector, reactionSelectorArg, reactionFlags);
             }
         }
         return actions;

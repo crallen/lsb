@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -266,7 +266,7 @@ bool CAIContainer::Internal_Disengage()
     return false;
 }
 
-bool CAIContainer::Internal_WeaponSkill(uint16 targid, uint16 wsid)
+bool CAIContainer::Internal_WeaponSkill(uint16 targid, uint16 wsid, bool consumeTP, uint16 minTPForDamage)
 {
     auto* entity = dynamic_cast<CBattleEntity*>(PEntity);
     if (entity)
@@ -275,7 +275,7 @@ bool CAIContainer::Internal_WeaponSkill(uint16 targid, uint16 wsid)
         {
             return false;
         }
-        return ChangeState<CWeaponSkillState>(entity, targid, wsid);
+        return ChangeState<CWeaponSkillState>(entity, targid, wsid, consumeTP, minTPForDamage);
     }
     return false;
 }

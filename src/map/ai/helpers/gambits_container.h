@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2025 LandSandBoat Dev Teams
@@ -85,6 +85,7 @@ enum class G_CONDITION : uint16
     NOT_PT_HAS_TANK    = 22,
     IS_ECOSYSTEM       = 23,
     HP_MISSING         = 24,
+    MASTER_HAS_ENMITY  = 25,
 };
 
 enum class G_REACTION : uint16
@@ -178,11 +179,13 @@ struct Action_t
     G_REACTION reaction;
     G_SELECT   select;
     uint32     select_arg = 0;
+    uint32     flags = 0;
 
-    Action_t(G_REACTION reaction, G_SELECT select, uint32 select_arg)
+    Action_t(G_REACTION reaction, G_SELECT select, uint32 select_arg, uint32 flags = 0)
     : reaction(reaction)
     , select(select)
     , select_arg(select_arg)
+    , flags(flags)
     {
     }
 
@@ -200,6 +203,10 @@ struct Action_t
         {
             select_arg = value;
         }
+        else if (key.compare("flags") == 0)
+        {
+            flags = value;
+        }
         else
         {
             // TODO: Log error
@@ -208,6 +215,14 @@ struct Action_t
         return true;
     }
 };
+
+// Weaponskill flags for gambit actions
+namespace WSFlags
+{
+    constexpr uint32 NONE        = 0x00;  // Default: consume TP, use actual TP for damage
+    constexpr uint32 FREE        = 0x01;  // Don't consume TP
+    constexpr uint32 MIN_1000_TP = 0x02;  // Use minimum 1000 TP for damage calculations
+}
 
 struct Gambit_t
 {

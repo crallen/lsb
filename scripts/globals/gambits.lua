@@ -80,6 +80,7 @@ ai.condition =
     NOT_PT_HAS_TANK    = 22,
     IS_ECOSYSTEM       = 23,
     HP_MISSING         = 24,
+    MASTER_HAS_ENMITY  = 25,
 }
 ai.c = ai.condition
 
@@ -125,4 +126,14 @@ ai.tp =
     OPENER          = 2,
     CLOSER          = 3,    -- Will Hold TP Indefinitely to close a SC
     CLOSER_UNTIL_TP = 4,    -- Will Hold TP to close a SC until a certain threshold
+}
+
+-- Weaponskill flags for gambit actions
+xi = xi or {}
+xi.wsFlag =
+{
+    NONE        = 0x00,  -- Default: consume TP, use actual TP for damage
+    FREE        = 0x01,  -- Don't consume TP
+    MIN_1000_TP = 0x02,  -- Use minimum 1000 TP for damage calculations
+    FREE_1000TP = 0x03,  -- Both: don't consume TP AND use minimum 1000 for damage
 }

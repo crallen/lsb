@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2025 LandSandBoat Dev Teams
@@ -613,6 +613,36 @@ void CGambitsContainer::Tick(timer::time_point tick)
                     controller->MobSkill(target->targid, action.select_arg, std::nullopt);
                 }
             }
+            else if (action.reaction == G_REACTION::WS)
+            {
+                if (action.select == G_SELECT::SPECIFIC)
+                {
+                    CWeaponSkill* PWeaponSkill = battleutils::GetWeaponSkill(action.select_arg);
+                    if (PWeaponSkill == nullptr)
+                    {
+                        ShowError("G_REACTION::WS: PWeaponSkill was null for ID: %d", action.select_arg);
+                        continue;
+                    }
+
+                    if (battleutils::isValidSelfTargetWeaponskill(action.select_arg))
+                    {
+                        target = POwner;
+                    }
+                    else
+                    {
+                        target = POwner->GetBattleTarget();
+                    }
+
+                    if (target)
+                    {
+                        // Extract flags to determine TP consumption behavior
+                        bool consumeTP = !(action.flags & WSFlags::FREE);
+                        uint16 minTPForDamage = (action.flags & WSFlags::MIN_1000_TP) ? 1000 : 0;
+                        
+                        controller->WeaponSkill(target->targid, PWeaponSkill->getID(), consumeTP, minTPForDamage);
+                    }
+                }
+            }
         }
 
         // Assume success
@@ -792,6 +822,23 @@ bool CGambitsContainer::CheckTrigger(const CBattleEntity* triggerTarget, Predica
             case G_CONDITION::HP_MISSING:
             {
                 predicateResults.push_back((triggerTarget->health.maxhp - triggerTarget->health.hp) >= (int16)predicate.condition_arg);
+                continue;
+            }
+            case G_CONDITION::MASTER_HAS_ENMITY:
+            {
+                bool masterHasEnmity = false;
+                auto* PMaster = static_cast<CCharEntity*>(POwner->PMaster);
+
+                if (PMaster && PMaster->GetBattleTarget())
+                {
+                    auto* PTargetMob = dynamic_cast<CMobEntity*>(PMaster->GetBattleTarget());
+                    if (PTargetMob && PTargetMob->PEnmityContainer->HasID(PMaster->id))
+                    {
+                        masterHasEnmity = true;
+                    }
+                }
+
+                predicateResults.push_back(masterHasEnmity);
                 continue;
             }
             default:
@@ -1010,7 +1057,8 @@ bool CGambitsContainer::TryTrustSkill()
             {
                 target = POwner->GetBattleTarget();
             }
-            controller->WeaponSkill(target->targid, PWeaponSkill->getID());
+            // Normal TP-based weaponskill: consumes TP, uses actual TP for damage
+            controller->WeaponSkill(target->targid, PWeaponSkill->getID(), true, 0);
         }
         else // Mobskill
         {

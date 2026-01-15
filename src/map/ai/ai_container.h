@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -68,7 +68,7 @@ public:
     bool Internal_Cast(uint16 targetid, SpellID spellid);
     bool Internal_ChangeTarget(uint16 targetid);
     bool Internal_Disengage();
-    bool Internal_WeaponSkill(uint16 targid, uint16 wsid);
+    bool Internal_WeaponSkill(uint16 targid, uint16 wsid, bool consumeTP = true, uint16 minTPForDamage = 0);
     bool Internal_MobSkill(uint16 targid, uint16 wsid, std::optional<timer::duration> castTimeOverride);
     bool Internal_PetSkill(uint16 targid, uint16 abilityid);
     bool Internal_Ability(uint16 targetid, uint16 abilityid);

@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -31,9 +31,11 @@
 #include "utils/battleutils.h"
 #include "weapon_skill.h"
 
-CWeaponSkillState::CWeaponSkillState(CBattleEntity* PEntity, uint16 targid, uint16 wsid)
+CWeaponSkillState::CWeaponSkillState(CBattleEntity* PEntity, uint16 targid, uint16 wsid, bool consumeTP, uint16 minTPForDamage)
 : CState(PEntity, targid)
 , m_PEntity(PEntity)
+, m_consumeTP(consumeTP)
+, m_minTPForDamage(minTPForDamage)
 {
     auto* skill = battleutils::GetWeaponSkill(wsid);
     if (!skill)
@@ -104,18 +106,31 @@ void CWeaponSkillState::SpendCost()
     {
         tp = m_PEntity->health.tp;
 
-        if (m_PEntity->getMod(Mod::WS_NO_DEPLETE) <= xirand::GetRandomNumber(100))
+        // Only consume TP if flag is set
+        if (m_consumeTP)
         {
-            m_PEntity->addTP(-tp);
+            if (m_PEntity->getMod(Mod::WS_NO_DEPLETE) <= xirand::GetRandomNumber(100))
+            {
+                m_PEntity->addTP(-tp);
+            }
         }
     }
 
-    if (xirand::GetRandomNumber(100) < m_PEntity->getMod(Mod::CONSERVE_TP))
+    // Conserve TP only applies if we consumed TP
+    if (m_consumeTP && xirand::GetRandomNumber(100) < m_PEntity->getMod(Mod::CONSERVE_TP))
     {
         m_PEntity->addTP(xirand::GetRandomNumber(10, 200));
     }
 
-    m_spent = tp;
+    // Apply minimum TP for damage calculations
+    if (m_minTPForDamage > 0)
+    {
+        m_spent = std::max(static_cast<int16>(tp), static_cast<int16>(m_minTPForDamage));
+    }
+    else
+    {
+        m_spent = tp;
+    }
 }
 
 bool CWeaponSkillState::Update(timer::time_point tick)

@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -28,7 +28,7 @@
 class CWeaponSkillState : public CState
 {
 public:
-    CWeaponSkillState(CBattleEntity* PEntity, uint16 targid, uint16 wsid);
+    CWeaponSkillState(CBattleEntity* PEntity, uint16 targid, uint16 wsid, bool consumeTP = true, uint16 minTPForDamage = 0);
 
     CWeaponSkill* GetSkill();
 
@@ -59,6 +59,8 @@ private:
     std::unique_ptr<CWeaponSkill> m_PSkill;
     timer::time_point             m_finishTime;
     int16                         m_spent{ 0 };
+    bool                          m_consumeTP;
+    uint16                        m_minTPForDamage;
 };
 
 #endif
