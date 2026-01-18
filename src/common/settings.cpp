@@ -40,8 +40,33 @@ std::unordered_map<std::string, SettingsVariant> settingsMap;
 // so we can pass them to the lua settings properly typed.
 bool isNumber(const std::string& stringValue)
 {
-    for (const char c : stringValue)
+    if (stringValue.empty())
     {
+        return false;
+    }
+
+    bool hasDecimal = false;
+    for (std::size_t i = 0; i < stringValue.size(); ++i)
+    {
+        const char c = stringValue[i];
+
+        // Allow leading minus sign
+        if (i == 0 && c == '-')
+        {
+            continue;
+        }
+
+        // Allow one decimal point
+        if (c == '.')
+        {
+            if (hasDecimal)
+            {
+                return false; // Multiple decimal points
+            }
+            hasDecimal = true;
+            continue;
+        }
+
         if (std::isdigit(c) == 0)
         {
             return false;
