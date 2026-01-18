@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2018 Darkstar Dev Teams
@@ -526,6 +526,8 @@ void CTrustEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& act
             actionResult.resolution                         = ActionResolution::Hit;
             actionResult.animation                          = PWeaponSkill->getAnimationId();
             std::tie(damage, tpHitsLanded, extraHitsLanded) = luautils::OnUseWeaponSkill(this, PTarget, PWeaponSkill, tp, primary, action, taChar);
+
+            battleutils::ClaimMob(PTarget, this);
 
             if (!battleutils::isValidSelfTargetWeaponskill(PWeaponSkill->getID()))
             {
