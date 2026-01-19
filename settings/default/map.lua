@@ -235,6 +235,11 @@ xi.settings.map =
     -- Adds extra time to mob despawn in seconds. Base time is 25s, so a setting of 5 here would be a total of 30 seconds.
     MOB_ADDITIONAL_TIME_TO_DEAGGRO = 0,
 
+    -- Multiplier for non-NM mob respawn times. Acts as a multiplier, so default is 1.
+    -- Values < 1 = faster respawns, > 1 = slower respawns. Does not affect NMs.
+    -- Minimum respawn time is clamped to 60 seconds.
+    MOB_RESPAWN_MULTIPLIER = 1.0,
+
     -- Allows parry, block, and guard to skill up regardless of the action occuring.
     -- This did not happen in previous eras
     PARRY_OLD_SKILLUP_STYLE = false,

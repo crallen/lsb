@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -501,6 +501,16 @@ void LoadMOBList(const std::vector<uint16>& zoneIds)
                             PMob->m_Type      = rset->get<MOBTYPE>("mobType");
                             PMob->m_Immunity  = rset->get<uint32>("immunity");
                             PMob->m_EcoSystem = rset->get<ECOSYSTEM>("ecosystemID");
+
+                            // Apply respawn multiplier for non-NM mobs only
+                            if (!(PMob->m_Type & MOBTYPE_NOTORIOUS) && PMob->m_RespawnTime > 0s)
+                            {
+                                auto multiplier     = settings::get<float>("map.MOB_RESPAWN_MULTIPLIER");
+                                auto newRespawnTime = std::chrono::duration_cast<std::chrono::seconds>(
+                                    PMob->m_RespawnTime * multiplier);
+                                // Clamp to minimum 60 seconds
+                                PMob->m_RespawnTime = std::max(newRespawnTime, std::chrono::seconds(60));
+                            }
 
                             PMob->baseSpeed      = rset->get<uint8>("speed");
                             PMob->animationSpeed = rset->get<uint8>("speed");
